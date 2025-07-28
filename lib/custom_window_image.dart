@@ -10,7 +10,7 @@ class CustomWindowImage extends StatefulWidget {
 }
 
 class _CustomWindowImageState extends State<CustomWindowImage> {
-  final CustomInfoWindowController _customInfoWindowController =
+  CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
   GoogleMapController? _googleMapController;
 
@@ -25,10 +25,7 @@ class _CustomWindowImageState extends State<CustomWindowImage> {
   );
 
   final List<Marker> marker = [];
-
-  @override
-  void initState() {
-    super.initState();
+  void addmarker(String image, String title, String description) {
     marker.add(
       Marker(
         markerId: MarkerId("1"),
@@ -36,20 +33,33 @@ class _CustomWindowImageState extends State<CustomWindowImage> {
         onTap: () {
           _customInfoWindowController.addInfoWindow!(
             Container(
-              width: 250,
-              height: 100,
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: Colors.green),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
-                children: const [
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(image, fit: BoxFit.cover),
+
                   Text(
-                    "Charsadda",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    title,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Text("Charsadda Graveyard"),
+
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -61,9 +71,16 @@ class _CustomWindowImageState extends State<CustomWindowImage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    _customInfoWindowController.dispose();
+    // TODO: implement dispose
     super.dispose();
+    _customInfoWindowController.dispose();
   }
 
   @override
@@ -76,20 +93,39 @@ class _CustomWindowImageState extends State<CustomWindowImage> {
             onMapCreated: (controller) {
               _googleMapController = controller;
               _customInfoWindowController.googleMapController = controller;
+              setState(() {
+                addmarker(
+                  "assets/images/charsadda_graveyard.jpg",
+                  "Charsadda",
+                  "The city where i live",
+                );
+              });
             },
-            markers: marker.toSet(),
-            onTap: (position) {
+            //if i tap on the google Map the custominfowindow will disappear
+            onTap: (_) {
               _customInfoWindowController.hideInfoWindow!();
             },
+            //move the widget with the marker
+            onCameraMove: (position) {
+              _customInfoWindowController.onCameraMove!();
+            },
+            markers: marker.toSet(),
           ),
           CustomInfoWindow(
             controller: _customInfoWindowController,
-            height: 100,
-            width: 250,
+            width: 200,
+            height: 200,
+
             offset: 50,
           ),
         ],
       ),
     );
   }
+
+  //custom widget
 }
+
+//dispose() is a lifecycle method in Flutter.
+//It is called when your widget is removed from the screen (destroyed).
+//tomorrow i will write this for both single custom widow and multiple custom window
