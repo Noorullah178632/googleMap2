@@ -2,6 +2,8 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google2/custom_info_window.dart';
 import 'package:flutter_google2/custom_window_image.dart';
+import 'package:flutter_google2/polygon.dart';
+import 'package:flutter_google2/polylines.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Custom_InfoWindow(),
+      home: Polylines_class(),
     );
   }
 }
