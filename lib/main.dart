@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google2/google_theme.dart';
 import 'package:flutter_google2/networkImage.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Networkimage(),
+      home: GoogleTheme(),
     );
   }
 }
